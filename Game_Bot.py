@@ -42,37 +42,37 @@ class Game_Bot:
         for i in range(15):
             for j in range(15):
                 # Horizontal win check
-                if self.gameBoard[i][j] == 'w':
-                    if self.gameBoard[i][j + 1] == 'w':
-                        if self.gameBoard[i][j + 2] == 'w':
-                            if self.gameBoard[i][j + 3] == 'w':
-                                if self.gameBoard[i][j + 4] == 'w':
+                if self.gameBoard[i][j] == 'b':
+                    if self.gameBoard[i][j + 1] == 'b':
+                        if self.gameBoard[i][j + 2] == 'b':
+                            if self.gameBoard[i][j + 3] == 'b':
+                                if self.gameBoard[i][j + 4] == 'b':
                                     return "Player"
 
                 # Vertical win check
-                if self.gameBoard[i][j] == 'w':
-                    if self.gameBoard[i + 1][j] == 'w':
-                        if self.gameBoard[i + 2][j] == 'w':
-                            if self.gameBoard[i + 3][j] == 'w':
-                                if self.gameBoard[i + 4][j] == 'w':
+                if self.gameBoard[i][j] == 'b':
+                    if self.gameBoard[i + 1][j] == 'b':
+                        if self.gameBoard[i + 2][j] == 'b':
+                            if self.gameBoard[i + 3][j] == 'b':
+                                if self.gameBoard[i + 4][j] == 'b':
                                     return "Player"
 
                 # Diagonal win check
                 # down and right???
-                if self.gameBoard[i][j] == 'w':
-                    if self.gameBoard[i + 1][j + 1] == 'w':
-                        if self.gameBoard[i + 2][j + 2] == 'w':
-                            if self.gameBoard[i + 3][j + 3] == 'w':
-                                if self.gameBoard[i + 4][j + 4] == 'w':
+                if self.gameBoard[i][j] == 'b':
+                    if self.gameBoard[i + 1][j + 1] == 'b':
+                        if self.gameBoard[i + 2][j + 2] == 'b':
+                            if self.gameBoard[i + 3][j + 3] == 'b':
+                                if self.gameBoard[i + 4][j + 4] == 'b':
                                     return "Player"
 
                 # up and right
                 if i >= 4:
-                    if self.gameBoard[i][j] == 'w':
-                        if self.gameBoard[i - 1][j + 1] == 'w':
-                            if self.gameBoard[i - 2][j + 2] == 'w':
-                                if self.gameBoard[i - 3][j + 3] == 'w':
-                                    if self.gameBoard[i - 4][j + 4] == 'w':
+                    if self.gameBoard[i][j] == 'b':
+                        if self.gameBoard[i - 1][j + 1] == 'b':
+                            if self.gameBoard[i - 2][j + 2] == 'b':
+                                if self.gameBoard[i - 3][j + 3] == 'b':
+                                    if self.gameBoard[i - 4][j + 4] == 'b':
                                         return "Player"
 
                 # down and left check for edge cases where up and right doesnt check
