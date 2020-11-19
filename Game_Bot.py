@@ -207,7 +207,7 @@ class Game_Bot:
             return ("Bot")
             print('\n'.join(map(''.join, self.gameBoard)))
         else:
-            print("None")
+            return ("None")
 
         print('\n'.join(map(''.join, self.gameBoard)))
 
