@@ -23,11 +23,10 @@ def main():
                 posx = event.pos[0]
                 posy = event.pos[1]
                 if (28+342) >= posx > 28 and (140+100) >= posy > 140:   #vs bot
-                    print("click1")
+                    #print("click1")
                     pygame.display.quit()
                     selectionMade = True
-                    showBoard()
-                    #playBotGame()
+                    playBotGame()
                 elif (28+342) >= posx > 28 and (253+100) >= posy > 253: #vs player
                     print("click2")
                     pygame.display.quit()
@@ -78,10 +77,33 @@ def displayMenu():
 
 def playBotGame():
     game = Game_Bot()
-    gameBoard = game.board()
+    gameBoard = game.Board()
     showBoard(gameBoard)
+    leftPad = 50
+    topPad = 172
+    currentX = 0
+    currentY = 0
 
-    result = game.result([5, 6])
+    while True:
+        for event in pygame.event.get():
+            mPosX = pygame.mouse.get_pos()[0]
+            mPosY = pygame.mouse.get_pos()[1]
+
+            if 50 < mPosX <= 750 and 172 < mPosY <= 871 and \
+                    ((((mPosX-50)//37)*37+67) != currentX or (((mPosY-172)//37)*37+189) != currentY):
+                showBoard(gameBoard)
+                pygame.draw.circle(pygame.display.get_surface(), (50, 50, 50),
+                                   (((mPosX-50)//37)*37+66, ((mPosY-172)//37)*37+189), 17)
+                currentX = ((mPosX-50)//37)*37+67
+                currentY = ((mPosY-172)//37)*37+189
+
+                pygame.display.update()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print((mPosX-50)//37, (mPosY-172)//37)
+                print(event.pos[0], event.pos[1])
+                result = game.result([((mPosX-50)//37)+1, (mPosY-172)//37+1])
+
 
 def playUserGame():
     pass
@@ -89,23 +111,30 @@ def playUserGame():
 def playTutorial():
     pass
 
-def showBoard():
+def showBoard(board):
     width = 800
     height = 920
     size = (width, height)
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption("GOMOKU")
     pygame.draw.rect(screen, PISTACHIO, (0, 0, width, height))
-    pygame.draw.rect(screen, COYOTE_BROWN, (50, 173, 703, 703))
+    pygame.draw.rect(screen, COYOTE_BROWN, (40, 163, 718, 718))
     pygame.draw.rect(screen, (80, 80, 80), (65, 188, 668, 668))
 
+    #Empty Board
     for i in range(18):
         for j in range(18):
             pygame.draw.rect(screen, CAMEL, ((i*37)+((width-(18*37))//2), 190+(j*37), 35, 35))
 
+    #Place pieces
+    for i in range(19):
+        for j in range(19):
+            #print("looking at: ", board[j][i])
+            if board[j][i] == "b":
+                pygame.draw.circle(screen, (10, 10, 10), (((i * 37) + ((width - (18 * 37)) // 2)-1), 190 + (j * 37)-1), 17)
+            elif board[j][i] == "w":
+                pygame.draw.circle(screen, (220, 220, 220), (((i * 37) + ((width - (18 * 37)) // 2)-1), 190 + (j * 37)-1), 17)
+
     pygame.display.update()
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                print("click")
+
 main()
