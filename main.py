@@ -1,5 +1,5 @@
 import pygame
-import Game_Bot
+from Game_Bot import Game_Bot
 import math
 
 #DONT CHANGE##########################
@@ -11,11 +11,7 @@ CAMEL = (198, 156, 109)
 COYOTE_BROWN = (140, 98, 57)
 
 pygame.init()
-width = 400
-height = 500
-size = (width, height)
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption("GOMOKU")
+
 ######################################
 
 def main():
@@ -27,15 +23,30 @@ def main():
                 posx = event.pos[0]
                 posy = event.pos[1]
                 if (28+342) >= posx > 28 and (140+100) >= posy > 140:   #vs bot
-                    playBotGame()
+                    print("click1")
+                    pygame.display.quit()
+                    selectionMade = True
+                    showBoard()
+                    #playBotGame()
                 elif (28+342) >= posx > 28 and (253+100) >= posy > 253: #vs player
-                    playUserGame()
+                    print("click2")
+                    pygame.display.quit()
+                    selectionMade = True
+                    #playUserGame()
                 elif (28+342) >= posx > 28 and (366+100) >= posy > 366: #tutorial
-                    playTutorial()
-                else:
-                    print("click")
+                    print("click3")
+                    pygame.display.quit()
+                    selectionMade = True
+                    #playTutorial()
+
 
 def displayMenu():
+    width = 400
+    height = 500
+    size = (width, height)
+    screen = pygame.display.set_mode(size)
+    pygame.display.set_caption("GOMOKU")
+
     pygame.draw.rect(screen, PISTACHIO, (0, 0, width, height))
 
     pygame.draw.rect(screen, COYOTE_BROWN, (28, 140, 342, 100))
@@ -49,7 +60,6 @@ def displayMenu():
     pygame.draw.rect(screen, COYOTE_BROWN, (28, 366, 342, 100))
     opThreeRect = pygame.draw.rect(screen, CAMEL, (28+3, 366+3, 342-6, 100-6))
     opThreeRect.center = (280, 366+(148//2))
-
 
     font = pygame.font.Font('Bitink.ttf', 100)
     title = font.render("Gomoku", True, INCHWORM)
@@ -68,6 +78,10 @@ def displayMenu():
 
 def playBotGame():
     game = Game_Bot()
+    gameBoard = game.board()
+    showBoard(gameBoard)
+
+    result = game.result([5, 6])
 
 def playUserGame():
     pass
@@ -75,4 +89,23 @@ def playUserGame():
 def playTutorial():
     pass
 
+def showBoard():
+    width = 800
+    height = 920
+    size = (width, height)
+    screen = pygame.display.set_mode(size)
+    pygame.display.set_caption("GOMOKU")
+    pygame.draw.rect(screen, PISTACHIO, (0, 0, width, height))
+    pygame.draw.rect(screen, COYOTE_BROWN, (50, 173, 703, 703))
+    pygame.draw.rect(screen, (80, 80, 80), (65, 188, 668, 668))
+
+    for i in range(18):
+        for j in range(18):
+            pygame.draw.rect(screen, CAMEL, ((i*37)+((width-(18*37))//2), 190+(j*37), 35, 35))
+
+    pygame.display.update()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print("click")
 main()
