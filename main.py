@@ -1,4 +1,5 @@
 import pygame
+import Game_Bot
 import math
 
 #DONT CHANGE##########################
@@ -25,14 +26,15 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 posx = event.pos[0]
                 posy = event.pos[1]
-                if ((28)+(342)) >= posx > (28) and ((140)+(100)) >= posy > (140):
-                    print("one click")
-                elif ((28)+(342)) >= posx > (28) and ((253)+(100)) >= posy > (253):
-                    print("two click")
-                elif ((28)+(342)) >= posx > (28) and ((366)+(100)) >= posy > (366):
-                    print("three click")
+                if (28+342) >= posx > 28 and (140+100) >= posy > 140:   #vs bot
+                    playBotGame()
+                elif (28+342) >= posx > 28 and (253+100) >= posy > 253: #vs player
+                    playUserGame()
+                elif (28+342) >= posx > 28 and (366+100) >= posy > 366: #tutorial
+                    playTutorial()
                 else:
                     print("click")
+
 def displayMenu():
     pygame.draw.rect(screen, PISTACHIO, (0, 0, width, height))
 
@@ -64,7 +66,13 @@ def displayMenu():
     screen.blit(opThree, opThreeRect)
     pygame.display.update()
 
-def playGame():
+def playBotGame():
+    game = Game_Bot()
+
+def playUserGame():
+    pass
+
+def playTutorial():
     pass
 
 main()
