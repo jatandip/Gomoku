@@ -40,6 +40,16 @@ class Game_Bot:
         y = move[1] - 1
         self.gameBoard[x][y] = "b"
 
+        filled = 0
+        for i in range(len(self.gameBoard)):
+            for j in range(len(self.gameBoard[i])):
+                if self.gameBoard[i][j] == '.':
+                    filled += 1
+
+        if filled == 361:
+            return "Draw"
+
+
         for i in range(15):
             for j in range(15):
                 # Horizontal win check
