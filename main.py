@@ -1,5 +1,5 @@
 import pygame
-import time
+from Game_SinglePlayer import Game_SinglePlayer
 from Game_Bot import Game_Bot
 import sys
 
@@ -12,7 +12,6 @@ CAMEL = (198, 156, 109)
 COYOTE_BROWN = (140, 98, 57)
 
 pygame.init()
-
 ######################################
 
 def main():
@@ -27,15 +26,13 @@ def main():
                 posx = event.pos[0]
                 posy = event.pos[1]
                 if (28+342) >= posx > 28 and (140+100) >= posy > 140:   #vs bot
-                    #print("click1")
                     pygame.display.quit()
                     selectionMade = True
                     playBotGame()
                 elif (28+342) >= posx > 28 and (253+100) >= posy > 253: #vs player
-                    print("click2")
                     pygame.display.quit()
                     selectionMade = True
-                    #playUserGame()
+                    playUserGame()
                 elif (28+342) >= posx > 28 and (366+100) >= posy > 366: #tutorial
                     print("click3")
                     pygame.display.quit()
@@ -115,8 +112,6 @@ def displayWinner(winner):
     screen.blit(quitText, quitRect)
     pygame.display.update()
 
-
-
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -128,7 +123,6 @@ def displayWinner(winner):
                     main()
                 elif (583 + 175) >= posx > 583 and (60+90) >= posy > 90:
                     sys.exit()
-
 
 def playBotGame():
     game = Game_Bot()
@@ -181,7 +175,66 @@ def playBotGame():
         firstClick = False
 
 def playUserGame():
-    pass
+    game = Game_SinglePlayer()
+    currentPlayer = 0
+    gameBoard = game.Board()
+    showBoard(gameBoard)
+    currentX = 0
+    currentY = 0
+    firstClick = True
+
+    while True:
+        for event in pygame.event.get():
+            mPosX = pygame.mouse.get_pos()[0]
+            mPosY = pygame.mouse.get_pos()[1]
+
+            if 50 < mPosX <= 750 and 172 < mPosY <= 871 and \
+                    ((((mPosX - 50) // 37) * 37 + 67) != currentX or (((mPosY - 172) // 37) * 37 + 189) != currentY):
+                showBoard(gameBoard)
+                #TODO change ghost colour
+                if currentPlayer == 0:
+                    pygame.draw.circle(pygame.display.get_surface(), (50, 50, 50),
+                                   (((mPosX - 50) // 37) * 37 + 66, ((mPosY - 172) // 37) * 37 + 189), 17)
+                else:
+                    pygame.draw.circle(pygame.display.get_surface(), (240, 240, 240),
+                                       (((mPosX - 50) // 37) * 37 + 66, ((mPosY - 172) // 37) * 37 + 189), 17)
+                currentX = ((mPosX - 50) // 37) * 37 + 67
+                currentY = ((mPosY - 172) // 37) * 37 + 189
+                pygame.display.update()
+
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if not firstClick:
+                    tileX = (mPosX - 50) // 37
+                    tileY = (mPosY - 172) // 37
+                    print(tileX, tileY)
+                    print(event.pos[0], event.pos[1])
+                    if gameBoard[tileY][tileX] == ".":
+                        if currentPlayer == 0:
+                            result = game.play("b", [tileY + 1, tileX + 1])
+                            currentPlayer = 1
+                        else:
+                            result = game.play("w", [tileY + 1, tileX + 1])
+                            currentPlayer = 0
+
+                        if result != "None":
+                            if result == "White":
+                                showBoard(gameBoard)
+                                displayWinner("white")
+                                print("p2 win")
+                            elif result == "Black":
+                                showBoard(gameBoard)
+                                displayWinner("black")
+                                print("p1 win")
+                            else:
+                                showBoard(gameBoard)
+                                displayWinner("draw")
+                            print("draw")
+                        else:
+                            gameBoard = game.Board()
+        firstClick = False
 
 def playTutorial():
     pass

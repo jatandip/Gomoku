@@ -331,8 +331,3 @@ class Game_Bot:
             return ("None")
 
         print('\n'.join(map(''.join, self.gameBoard)))
-
-
-
-
-
