@@ -1,6 +1,7 @@
 import pygame
+import time
 from Game_Bot import Game_Bot
-import math
+import sys
 
 #DONT CHANGE##########################
 WHITE = (255, 255, 255)
@@ -17,8 +18,11 @@ pygame.init()
 def main():
     selectionMade = False
     displayMenu()
+
     while not selectionMade:
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 posx = event.pos[0]
                 posy = event.pos[1]
@@ -37,7 +41,6 @@ def main():
                     pygame.display.quit()
                     selectionMade = True
                     #playTutorial()
-
 
 def displayMenu():
     width = 400
@@ -75,14 +78,65 @@ def displayMenu():
     screen.blit(opThree, opThreeRect)
     pygame.display.update()
 
+def displayWinner(winner):
+    font = pygame.font.Font('Bitink.ttf', 30)
+    screen = pygame.display.get_surface()
+
+    pygame.draw.rect(screen, COYOTE_BROWN, (583, 90, 175, 60))
+    pygame.draw.rect(screen, CAMEL, (583+3, 90+3, 175-6, 60-6))
+
+    pygame.draw.rect(screen, COYOTE_BROWN, (583, 20, 175, 60))
+    pygame.draw.rect(screen, CAMEL, (583+3, 20+3, 175-6, 60-6))
+
+
+    homeText = font.render("Main Menu", True, ORANGE_YELLOW)
+    quitText = font.render("Quit", True, ORANGE_YELLOW)
+
+    font = pygame.font.Font('Bitink.ttf', 80)
+
+    if winner == "white":
+        print("whot")
+        winText = font.render("White wins!", True, INCHWORM)
+    elif winner == "black":
+        winText = font.render("Black wins!", True, INCHWORM)
+    else:
+        winText = font.render("Draw!", True, INCHWORM)
+
+    winRect = winText.get_rect()
+    homeRect = homeText.get_rect()
+    quitRect = quitText.get_rect()
+
+    winRect.center = (270, 90)
+    homeRect.center = (670,50)
+    quitRect.center = (670,120)
+
+    screen.blit(winText, winRect)
+    screen.blit(homeText, homeRect)
+    screen.blit(quitText, quitRect)
+    pygame.display.update()
+
+
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                posx = event.pos[0]
+                posy = event.pos[1]
+                if (583 + 175) >= posx > 583 and (60+20) >= posy > 20:
+                    main()
+                elif (583 + 175) >= posx > 583 and (60+90) >= posy > 90:
+                    sys.exit()
+
+
 def playBotGame():
     game = Game_Bot()
     gameBoard = game.Board()
     showBoard(gameBoard)
-    leftPad = 50
-    topPad = 172
     currentX = 0
     currentY = 0
+    firstClick = True
 
     while True:
         for event in pygame.event.get():
@@ -96,14 +150,35 @@ def playBotGame():
                                    (((mPosX-50)//37)*37+66, ((mPosY-172)//37)*37+189), 17)
                 currentX = ((mPosX-50)//37)*37+67
                 currentY = ((mPosY-172)//37)*37+189
-
                 pygame.display.update()
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                print((mPosX-50)//37, (mPosY-172)//37)
-                print(event.pos[0], event.pos[1])
-                result = game.result([((mPosX-50)//37)+1, (mPosY-172)//37+1])
+            if event.type == pygame.QUIT:
+                sys.exit()
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if not firstClick:
+                    tileX = (mPosX-50)//37
+                    tileY = (mPosY-172)//37
+                    print(tileX, tileY)
+                    print(event.pos[0], event.pos[1])
+                    if gameBoard[tileY][tileX] == ".":
+                        result = game.result([tileY+1, tileX+1])
+                        if result != "None":
+                            if result == "Bot":
+                                showBoard(gameBoard)
+                                displayWinner("white")
+                                print("bot win")
+                            elif result == "Player":
+                                showBoard(gameBoard)
+                                displayWinner("black")
+                                print("p win")
+                            else:
+                                showBoard(gameBoard)
+                                displayWinner("draw")
+                            print("ds")
+                        else:
+                            gameBoard = game.Board()
+        firstClick = False
 
 def playUserGame():
     pass
