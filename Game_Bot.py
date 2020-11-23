@@ -40,16 +40,6 @@ class Game_Bot:
         y = move[1] - 1
         self.gameBoard[x][y] = "b"
 
-        filled = 0
-        for i in range(len(self.gameBoard)):
-            for j in range(len(self.gameBoard[i])):
-                if self.gameBoard[i][j] == '.':
-                    filled += 1
-
-        if filled == 361:
-            return "Draw"
-
-
         for i in range(15):
             for j in range(15):
                 # Horizontal win check
@@ -94,6 +84,15 @@ class Game_Bot:
                                 if self.gameBoard[i + 3][j - 3] == 'w':
                                     if self.gameBoard[i + 4][j - 4] == 'w':
                                         return "Player"
+
+        filled = 0
+        for i in range(len(self.gameBoard)):
+            for j in range(len(self.gameBoard[i])):
+                if self.gameBoard[i][j] != '.':
+                    filled += 1
+
+        if filled == 361:
+            return "Draw"
 
 
         bestMove = [
@@ -339,6 +338,16 @@ class Game_Bot:
             print('\n'.join(map(''.join, self.gameBoard)))
         else:
             return ("None")
+
+        filled = 0
+        for i in range(len(self.gameBoard)):
+            for j in range(len(self.gameBoard[i])):
+                if self.gameBoard[i][j] != '.':
+                    filled += 1
+
+        if filled == 361:
+            return "Draw"
+
 
         print('\n'.join(map(''.join, self.gameBoard)))
 
