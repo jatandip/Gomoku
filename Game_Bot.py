@@ -330,6 +330,7 @@ class Game_Bot:
 
         self.gameBoard[bestPos[0]][bestPos[1]] = "w"
 
+        print(bestScore)
         if bestScore == 4:
             #print("Bot")
             returnList = []
