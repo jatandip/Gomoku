@@ -34,7 +34,6 @@ def main():
                     selectionMade = True
                     playUserGame()
                 elif (28+342) >= posx > 28 and (366+100) >= posy > 366: #tutorial
-                    print("click3")
                     pygame.display.quit()
                     selectionMade = True
                     #playTutorial()
@@ -92,7 +91,6 @@ def displayWinner(winner):
     font = pygame.font.Font('Bitink.ttf', 80)
 
     if winner == "white":
-        print("whot")
         winText = font.render("White wins!", True, INCHWORM)
     elif winner == "black":
         winText = font.render("Black wins!", True, INCHWORM)
@@ -159,17 +157,16 @@ def playBotGame():
                         result = game.result([tileY+1, tileX+1])
                         if result != "None":
                             if result == "Bot":
+                                print("b win")
                                 showBoard(gameBoard)
                                 displayWinner("white")
-                                print("bot win")
                             elif result == "Player":
+                                print("p win")
                                 showBoard(gameBoard)
                                 displayWinner("black")
-                                print("p win")
                             else:
                                 showBoard(gameBoard)
                                 displayWinner("draw")
-                            print("ds")
                         else:
                             gameBoard = game.Board()
         firstClick = False
@@ -191,7 +188,6 @@ def playUserGame():
             if 50 < mPosX <= 750 and 172 < mPosY <= 871 and \
                     ((((mPosX - 50) // 37) * 37 + 67) != currentX or (((mPosY - 172) // 37) * 37 + 189) != currentY):
                 showBoard(gameBoard)
-                #TODO change ghost colour
                 if currentPlayer == 0:
                     pygame.draw.circle(pygame.display.get_surface(), (50, 50, 50),
                                    (((mPosX - 50) // 37) * 37 + 66, ((mPosY - 172) // 37) * 37 + 189), 17)
@@ -223,15 +219,12 @@ def playUserGame():
                             if result == "White":
                                 showBoard(gameBoard)
                                 displayWinner("white")
-                                print("p2 win")
                             elif result == "Black":
                                 showBoard(gameBoard)
                                 displayWinner("black")
-                                print("p1 win")
                             else:
                                 showBoard(gameBoard)
                                 displayWinner("draw")
-                            print("draw")
                         else:
                             gameBoard = game.Board()
         firstClick = False
@@ -257,7 +250,6 @@ def showBoard(board):
     #Place pieces
     for i in range(19):
         for j in range(19):
-            #print("looking at: ", board[j][i])
             if board[j][i] == "b":
                 pygame.draw.circle(screen, (10, 10, 10), (((i * 37) + ((width - (18 * 37)) // 2)-1), 190 + (j * 37)-1), 17)
             elif board[j][i] == "w":
