@@ -160,14 +160,15 @@ class Game_Bot:
 
                 stop = False
                 horRightMove = j + 1
-                while horRightMove < 19 and stop != True and points[0] < 5 and self.gameBoard[i][horRightMove] == "b":
+                while horRightMove < 19 and stop != True and points[8] < 5 and self.gameBoard[i][horRightMove] == "b":
                     points[8] += 1
                     if self.gameBoard[i][horRightMove] == "w":
                         stop = True
                     horRightMove += 1
+                stop = False
 
                 horLeftMove = j - 1
-                while horLeftMove >= 0 and stop != True and points[1] < 5 and self.gameBoard[i][horLeftMove] == "b":
+                while horLeftMove >= 0 and stop != True and points[8] < 5 and self.gameBoard[i][horLeftMove] == "b":
                     points[8] += 1
                     if self.gameBoard[i][horLeftMove] == "w":
                         stop = True
@@ -191,14 +192,15 @@ class Game_Bot:
 
                 stop = False
                 verTopMove = i - 1
-                while verTopMove >= 0 and stop != True and points[2] < 5 and self.gameBoard[verTopMove][j] == "b":
+                while verTopMove >= 0 and stop != True and points[9] < 5 and self.gameBoard[verTopMove][j] == "b":
                     points[9] += 1
                     if self.gameBoard[verTopMove][j] == "w":
                         stop = True
                     verTopMove -= 1
 
+                stop = False
                 verBottomMove = i + 1
-                while verBottomMove < 19 and stop != True and points[3] < 5 and self.gameBoard[verBottomMove][j] == "b":
+                while verBottomMove < 19 and stop != True and points[9] < 5 and self.gameBoard[verBottomMove][j] == "b":
                     points[9] += 1
                     if self.gameBoard[verBottomMove][j] == "w":
                         stop = True
@@ -252,7 +254,7 @@ class Game_Bot:
                 stop = False
                 diaBottomLeftX = i + 1
                 diaBottomLeftY = j - 1
-                while diaBottomLeftX < 19 and diaBottomLeftY >= 0 and stop != True and points[7] < 5 and \
+                while diaBottomLeftX < 19 and diaBottomLeftY >= 0 and stop != True and points[10] < 5 and \
                         self.gameBoard[diaBottomLeftX][diaBottomLeftY] == "b":
                     points[10] += 1
                     if self.gameBoard[diaBottomLeftX][diaBottomLeftY] == "w":
@@ -260,9 +262,10 @@ class Game_Bot:
                     diaBottomLeftX += 1
                     diaBottomLeftY -= 1
 
+                stop = False
                 diaTopRightX = i - 1
                 diaTopRightY = j + 1
-                while diaTopRightX >= 0 and diaTopRightY < 19 and stop != True and points[4] < 5 and \
+                while diaTopRightX >= 0 and diaTopRightY < 19 and stop != True and points[10] < 5 and \
                         self.gameBoard[diaTopRightX][diaTopRightY] == "b":
                     points[10] += 1
                     if self.gameBoard[diaTopRightX][diaTopRightY] == "w":
@@ -273,7 +276,7 @@ class Game_Bot:
                 stop = False
                 diaBottomRightX = i + 1
                 diaBottomRightY = j + 1
-                while diaBottomRightX < 19 and diaBottomRightY < 19 and stop != True and points[6] < 5 and \
+                while diaBottomRightX < 19 and diaBottomRightY < 19 and stop != True and points[11] < 5 and \
                         self.gameBoard[diaBottomRightX][diaBottomRightY] == "b":
                     points[11] += 1
                     if self.gameBoard[diaBottomRightX][diaBottomRightY] == "w":
@@ -281,9 +284,10 @@ class Game_Bot:
                     diaBottomRightX += 1
                     diaBottomRightY += 1
 
+                stop = False
                 diaTopLeftX = i - 1
                 diaTopLeftY = j - 1
-                while diaTopLeftX >= 0 and diaTopLeftY >= 0 and stop != True and points[5] < 5 and \
+                while diaTopLeftX >= 0 and diaTopLeftY >= 0 and stop != True and points[11] < 5 and \
                         self.gameBoard[diaTopLeftX][diaTopLeftY] == "b":
                     points[11] += 1
                     if self.gameBoard[diaTopLeftX][diaTopLeftY] == "w":
@@ -332,14 +336,15 @@ class Game_Bot:
 
                 stop = False
                 horRightMove = j + 1
-                while horRightMove < 19 and stop != True and points[0] < 5 and self.gameBoard[i][horRightMove] == "w":
+                while horRightMove < 19 and stop != True and points[8] < 5 and self.gameBoard[i][horRightMove] == "w":
                     points[8] += 1
                     if self.gameBoard[i][horRightMove] == "b":
                         stop = True
                     horRightMove += 1
 
+                stop = False
                 horLeftMove = j - 1
-                while horLeftMove >= 0 and stop != True and points[1] < 5 and self.gameBoard[i][horLeftMove] == "w":
+                while horLeftMove >= 0 and stop != True and points[8] < 5 and self.gameBoard[i][horLeftMove] == "w":
                     points[8] += 1
                     if self.gameBoard[i][horLeftMove] == "b":
                         stop = True
@@ -363,14 +368,15 @@ class Game_Bot:
 
                 stop = False
                 verTopMove = i - 1
-                while verTopMove >= 0 and stop != True and points[2] < 5 and self.gameBoard[verTopMove][j] == "w":
+                while verTopMove >= 0 and stop != True and points[9] < 5 and self.gameBoard[verTopMove][j] == "w":
                     points[9] += 1
                     if self.gameBoard[verTopMove][j] == "b":
                         stop = True
                     verTopMove -= 1
 
+                stop = False
                 verBottomMove = i + 1
-                while verBottomMove < 19 and stop != True and points[3] < 5 and self.gameBoard[verBottomMove][j] == "w":
+                while verBottomMove < 19 and stop != True and points[9] < 5 and self.gameBoard[verBottomMove][j] == "w":
                     points[9] += 1
                     if self.gameBoard[verBottomMove][j] == "b":
                         stop = True
@@ -422,7 +428,7 @@ class Game_Bot:
                 stop = False
                 diaBottomLeftX = i + 1
                 diaBottomLeftY = j - 1
-                while diaBottomLeftX < 19 and diaBottomLeftY >= 0 and stop != True and points[7] < 5 and \
+                while diaBottomLeftX < 19 and diaBottomLeftY >= 0 and stop != True and points[10] < 5 and \
                         self.gameBoard[diaBottomLeftX][diaBottomLeftY] == "w":
                     points[10] += 1
                     if self.gameBoard[diaBottomLeftX][diaBottomLeftY] == "b":
@@ -430,9 +436,10 @@ class Game_Bot:
                     diaBottomLeftX += 1
                     diaBottomLeftY -= 1
 
+                stop = False
                 diaTopRightX = i - 1
                 diaTopRightY = j + 1
-                while diaTopRightX >= 0 and diaTopRightY < 19 and stop != True and points[4] < 5 and \
+                while diaTopRightX >= 0 and diaTopRightY < 19 and stop != True and points[10] < 5 and \
                         self.gameBoard[diaTopRightX][diaTopRightY] == "w":
                     points[10] += 1
                     if self.gameBoard[diaTopRightX][diaTopRightY] == "b":
@@ -443,7 +450,7 @@ class Game_Bot:
                 stop = False
                 diaBottomRightX = i + 1
                 diaBottomRightY = j + 1
-                while diaBottomRightX < 19 and diaBottomRightY < 19 and stop != True and points[6] < 5 and \
+                while diaBottomRightX < 19 and diaBottomRightY < 19 and stop != True and points[11] < 5 and \
                         self.gameBoard[diaBottomRightX][diaBottomRightY] == "w":
                     points[11] += 1
                     if self.gameBoard[diaBottomRightX][diaBottomRightY] == "b":
@@ -451,9 +458,10 @@ class Game_Bot:
                     diaBottomRightX += 1
                     diaBottomRightY += 1
 
+                stop = False
                 diaTopLeftX = i - 1
                 diaTopLeftY = j - 1
-                while diaTopLeftX >= 0 and diaTopLeftY >= 0 and stop != True and points[5] < 5 and \
+                while diaTopLeftX >= 0 and diaTopLeftY >= 0 and stop != True and points[11] < 5 and \
                         self.gameBoard[diaTopLeftX][diaTopLeftY] == "w":
                     points[11] += 1
                     if self.gameBoard[diaTopLeftX][diaTopLeftY] == "b":
