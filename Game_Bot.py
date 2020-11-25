@@ -140,7 +140,7 @@ class Game_Bot:
 
         for i in range(len(self.gameBoard)):
             for j in range(len(self.gameBoard[i])):
-                points = [0, 0, 0, 0, 0, 0, 0, 0]
+                points = [0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0]
 
                 stop = False
                 horRightMove = j + 1
@@ -159,6 +159,21 @@ class Game_Bot:
                     horLeftMove -= 1
 
                 stop = False
+                horRightMove = j + 1
+                while horRightMove < 19 and stop != True and points[0] < 5 and self.gameBoard[i][horRightMove] == "b":
+                    points[8] += 1
+                    if self.gameBoard[i][horRightMove] == "w":
+                        stop = True
+                    horRightMove += 1
+
+                horLeftMove = j - 1
+                while horLeftMove >= 0 and stop != True and points[1] < 5 and self.gameBoard[i][horLeftMove] == "b":
+                    points[8] += 1
+                    if self.gameBoard[i][horLeftMove] == "w":
+                        stop = True
+                    horLeftMove -= 1
+
+                stop = False
                 verTopMove = i - 1
                 while verTopMove >= 0 and stop != True and points[2] < 5 and self.gameBoard[verTopMove][j] == "b":
                     points[2] += 1
@@ -170,6 +185,21 @@ class Game_Bot:
                 verBottomMove = i + 1
                 while verBottomMove < 19 and stop != True and points[3] < 5 and self.gameBoard[verBottomMove][j] == "b":
                     points[3] += 1
+                    if self.gameBoard[verBottomMove][j] == "w":
+                        stop = True
+                    verBottomMove += 1
+
+                stop = False
+                verTopMove = i - 1
+                while verTopMove >= 0 and stop != True and points[2] < 5 and self.gameBoard[verTopMove][j] == "b":
+                    points[9] += 1
+                    if self.gameBoard[verTopMove][j] == "w":
+                        stop = True
+                    verTopMove -= 1
+
+                verBottomMove = i + 1
+                while verBottomMove < 19 and stop != True and points[3] < 5 and self.gameBoard[verBottomMove][j] == "b":
+                    points[9] += 1
                     if self.gameBoard[verBottomMove][j] == "w":
                         stop = True
                     verBottomMove += 1
@@ -217,6 +247,10 @@ class Game_Bot:
                         stop = True
                     diaBottomLeftX += 1
                     diaBottomLeftY -= 1
+
+
+
+
 
                 blockPlayerBoard[i][j] = str(max(points))
 
