@@ -1,6 +1,7 @@
 import pygame
 from Game_SinglePlayer import Game_SinglePlayer
 from Game_Bot import Game_Bot
+from Game_Tutorial import Game_Tutorial
 import sys
 
 #DONT CHANGE##########################
@@ -36,7 +37,7 @@ def main():
                 elif (28+342) >= posx > 28 and (366+100) >= posy > 366: #tutorial
                     pygame.display.quit()
                     selectionMade = True
-                    #playTutorial()
+                    playTutorial()
 
 def displayMenu():
     width = 400
@@ -229,8 +230,68 @@ def playUserGame():
                             gameBoard = game.Board()
         firstClick = False
 
+def displayWarning(warningPos):
+    font = pygame.font.Font('Bitink.ttf', 30)
+    screen = pygame.display.get_surface()
+
+    warnString = "White is about to win at" + warningPos + "!"
+    warnText = font.render(warnString, True, INCHWORM)
+    warnRect = warnText.get_rect()
+    screen.blit(warnText, warnRect)
+    pygame.display.update()
+
 def playTutorial():
-    pass
+    game = Game_Tutorial()
+    gameBoard = game.board()
+    showBoard(gameBoard)
+    currentX = 0
+    currentY = 0
+    firstClick = True
+    result = (False, [], "None")
+    while True:
+        for event in pygame.event.get():
+            mPosX = pygame.mouse.get_pos()[0]
+            mPosY = pygame.mouse.get_pos()[1]
+
+            if 50 < mPosX <= 750 and 172 < mPosY <= 871 and \
+                    ((((mPosX-50)//37)*37+67) != currentX or (((mPosY-172)//37)*37+189) != currentY):
+                showBoard(gameBoard)
+                pygame.draw.circle(pygame.display.get_surface(), (50, 50, 50),
+                                   (((mPosX-50)//37)*37+66, ((mPosY-172)//37)*37+189), 17)
+                currentX = ((mPosX-50)//37)*37+67
+                currentY = ((mPosY-172)//37)*37+189
+                pygame.display.update()
+
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+            if result[0] == True:
+                displayWarning(result[1])
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if not firstClick:
+                    tileX = (mPosX-50)//37
+                    tileY = (mPosY-172)//37
+                    print(tileX, tileY)
+                    print(event.pos[0], event.pos[1])
+                    if gameBoard[tileY][tileX] == ".":
+                        result = game.result([tileY+1, tileX+1])
+                        if result[2] != "None":
+                            if result[2] == "Bot":
+                                print("b win")
+                                showBoard(gameBoard)
+                                displayWinner("white")
+                            elif result[2] == "Player":
+                                print("p win")
+                                showBoard(gameBoard)
+                                displayWinner("black")
+                            else:
+                                showBoard(gameBoard)
+                                displayWinner("draw")
+                        else:
+                            gameBoard = game.board()
+
+        firstClick = False
 
 def showBoard(board):
     width = 800
