@@ -258,8 +258,7 @@ class Game_Tutorial:
         bestPos = []
         for x in range(len(blockPlayerBoard)):
             for y in range(len(blockPlayerBoard[x])):
-                if int(blockPlayerBoard[x][y]) >= bestScore and self.gameBoard[x][y] != "b" and self.gameBoard[x][
-                    y] != "w":
+                if int(blockPlayerBoard[x][y]) >= bestScore and self.gameBoard[x][y] != "b" and self.gameBoard[x][y] != "w":
                     bestScore = int(blockPlayerBoard[x][y])
                     bestPos = [x, y]
 
@@ -362,13 +361,12 @@ class Game_Tutorial:
         self.gameBoard[bestPos[0]][bestPos[1]] = "w"
 
         if bestScore == 4:
-            # print("Bot")
             returnList = []
             returnList.append("Bot")
             returnList.append(self.gameBoard)
-            return ("Bot")
+            return "Bot"
             print('\n'.join(map(''.join, self.gameBoard)))
         else:
-            return ("None")
+            return "None"
 
         print('\n'.join(map(''.join, self.gameBoard)))
