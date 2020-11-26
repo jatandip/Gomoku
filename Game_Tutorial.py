@@ -146,8 +146,8 @@ class Game_Tutorial:
             return False, False, (0, 0), 'Draw'
 
         """
-                        Player close to win check for tip display
-                        """
+        Player close to win check for tip display
+        """
         for i in range(16):
             for j in range(16):
                 # Horizontal check
@@ -204,7 +204,7 @@ class Game_Tutorial:
                                         return False, True, (i - 1, j + 1), 'None'
                                     elif self.gameBoard[i + 4][j - 4] == '.':
                                         return False, True, (i + 4, j - 4), 'None'
-                                    
+
         """
         Player about to lose check for warning
         """
@@ -265,8 +265,6 @@ class Game_Tutorial:
                                     elif self.gameBoard[i + 4][j - 4] == '.':
                                         return True, False, (i + 4, j - 4), 'None'
 
-
-
         bestMove = [
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
@@ -312,7 +310,7 @@ class Game_Tutorial:
 
         for i in range(len(self.gameBoard)):
             for j in range(len(self.gameBoard[i])):
-                points = [0, 0, 0, 0, 0, 0, 0, 0]
+                points = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
                 stop = False
                 horRightMove = j + 1
@@ -390,16 +388,94 @@ class Game_Tutorial:
                     diaBottomLeftX += 1
                     diaBottomLeftY -= 1
 
+                stop = False
+                horRightMove = j + 1
+                while horRightMove < 19 and stop != True and points[8] < 5 and self.gameBoard[i][horRightMove] == "b":
+                    points[8] += 1
+                    if self.gameBoard[i][horRightMove] == "w":
+                        stop = True
+                    horRightMove += 1
+                stop = False
+
+                horLeftMove = j - 1
+                while horLeftMove >= 0 and stop != True and points[8] < 5 and self.gameBoard[i][horLeftMove] == "b":
+                    points[8] += 1
+                    if self.gameBoard[i][horLeftMove] == "w":
+                        stop = True
+                    horLeftMove -= 1
+
+                stop = False
+                verTopMove = i - 1
+                while verTopMove >= 0 and stop != True and points[9] < 5 and self.gameBoard[verTopMove][j] == "b":
+                    points[9] += 1
+                    if self.gameBoard[verTopMove][j] == "w":
+                        stop = True
+                    verTopMove -= 1
+
+                stop = False
+                verBottomMove = i + 1
+                while verBottomMove < 19 and stop != True and points[9] < 5 and self.gameBoard[verBottomMove][j] == "b":
+                    points[9] += 1
+                    if self.gameBoard[verBottomMove][j] == "w":
+                        stop = True
+                    verBottomMove += 1
+
+                stop = False
+                diaBottomLeftX = i + 1
+                diaBottomLeftY = j - 1
+                while diaBottomLeftX < 19 and diaBottomLeftY >= 0 and stop != True and points[10] < 5 and \
+                        self.gameBoard[diaBottomLeftX][diaBottomLeftY] == "b":
+                    points[10] += 1
+                    if self.gameBoard[diaBottomLeftX][diaBottomLeftY] == "w":
+                        stop = True
+                    diaBottomLeftX += 1
+                    diaBottomLeftY -= 1
+
+                stop = False
+                diaTopRightX = i - 1
+                diaTopRightY = j + 1
+                while diaTopRightX >= 0 and diaTopRightY < 19 and stop != True and points[10] < 5 and \
+                        self.gameBoard[diaTopRightX][diaTopRightY] == "b":
+                    points[10] += 1
+                    if self.gameBoard[diaTopRightX][diaTopRightY] == "w":
+                        stop = True
+                    diaTopRightX -= 1
+                    diaTopRightY += 1
+
+                stop = False
+                diaBottomRightX = i + 1
+                diaBottomRightY = j + 1
+                while diaBottomRightX < 19 and diaBottomRightY < 19 and stop != True and points[11] < 5 and \
+                        self.gameBoard[diaBottomRightX][diaBottomRightY] == "b":
+                    points[11] += 1
+                    if self.gameBoard[diaBottomRightX][diaBottomRightY] == "w":
+                        stop = True
+                    diaBottomRightX += 1
+                    diaBottomRightY += 1
+
+                stop = False
+                diaTopLeftX = i - 1
+                diaTopLeftY = j - 1
+                while diaTopLeftX >= 0 and diaTopLeftY >= 0 and stop != True and points[11] < 5 and \
+                        self.gameBoard[diaTopLeftX][diaTopLeftY] == "b":
+                    points[11] += 1
+                    if self.gameBoard[diaTopLeftX][diaTopLeftY] == "w":
+                        stop = True
+                    diaTopLeftX -= 1
+                    diaTopLeftY -= 1
+
                 blockPlayerBoard[i][j] = str(max(points))
 
         bestScore = 0
         bestPos = []
         for x in range(len(blockPlayerBoard)):
             for y in range(len(blockPlayerBoard[x])):
-                if int(blockPlayerBoard[x][y]) >= bestScore and self.gameBoard[x][y] != "b" and self.gameBoard[x][y] != "w":
+                if int(blockPlayerBoard[x][y]) >= bestScore and self.gameBoard[x][y] != "b" and self.gameBoard[x][
+                    y] != "w":
                     bestScore = int(blockPlayerBoard[x][y])
                     bestPos = [x, y]
 
+        print(bestScore)
         if bestScore == 4:
             self.gameBoard[bestPos[0]][bestPos[1]] = "w"
             print("Blocked")
@@ -408,7 +484,7 @@ class Game_Tutorial:
 
         for i in range(len(self.gameBoard)):
             for j in range(len(self.gameBoard[i])):
-                points = [0, 0, 0, 0, 0, 0, 0, 0]
+                points = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
                 stop = False
                 horRightMove = j + 1
@@ -486,6 +562,82 @@ class Game_Tutorial:
                     diaBottomLeftX += 1
                     diaBottomLeftY -= 1
 
+                stop = False
+                horRightMove = j + 1
+                while horRightMove < 19 and stop != True and points[8] < 5 and self.gameBoard[i][horRightMove] == "w":
+                    points[8] += 1
+                    if self.gameBoard[i][horRightMove] == "b":
+                        stop = True
+                    horRightMove += 1
+
+                stop = False
+                horLeftMove = j - 1
+                while horLeftMove >= 0 and stop != True and points[8] < 5 and self.gameBoard[i][horLeftMove] == "w":
+                    points[8] += 1
+                    if self.gameBoard[i][horLeftMove] == "b":
+                        stop = True
+                    horLeftMove -= 1
+
+                verTopMove = i - 1
+                stop = False
+                while verTopMove >= 0 and stop != True and points[9] < 5 and self.gameBoard[verTopMove][j] == "w":
+                    points[9] += 1
+                    if self.gameBoard[verTopMove][j] == "b":
+                        stop = True
+                    verTopMove -= 1
+
+                stop = False
+                verBottomMove = i + 1
+                while verBottomMove < 19 and stop != True and points[9] < 5 and self.gameBoard[verBottomMove][j] == "w":
+                    points[9] += 1
+                    if self.gameBoard[verBottomMove][j] == "b":
+                        stop = True
+                    verBottomMove += 1
+
+                stop = False
+                diaBottomLeftX = i + 1
+                diaBottomLeftY = j - 1
+                while diaBottomLeftX < 19 and diaBottomLeftY >= 0 and stop != True and points[10] < 5 and \
+                        self.gameBoard[diaBottomLeftX][diaBottomLeftY] == "w":
+                    points[10] += 1
+                    if self.gameBoard[diaBottomLeftX][diaBottomLeftY] == "b":
+                        stop = True
+                    diaBottomLeftX += 1
+                    diaBottomLeftY -= 1
+
+                stop = False
+                diaTopRightX = i - 1
+                diaTopRightY = j + 1
+                while diaTopRightX >= 0 and diaTopRightY < 19 and stop != True and points[10] < 5 and \
+                        self.gameBoard[diaTopRightX][diaTopRightY] == "w":
+                    points[10] += 1
+                    if self.gameBoard[diaTopRightX][diaTopRightY] == "b":
+                        stop = True
+                    diaTopRightX -= 1
+                    diaTopRightY += 1
+
+                stop = False
+                diaBottomRightX = i + 1
+                diaBottomRightY = j + 1
+                while diaBottomRightX < 19 and diaBottomRightY < 19 and stop != True and points[11] < 5 and \
+                        self.gameBoard[diaBottomRightX][diaBottomRightY] == "w":
+                    points[11] += 1
+                    if self.gameBoard[diaBottomRightX][diaBottomRightY] == "b":
+                        stop = True
+                    diaBottomRightX += 1
+                    diaBottomRightY += 1
+
+                stop = False
+                diaTopLeftX = i - 1
+                diaTopLeftY = j - 1
+                while diaTopLeftX >= 0 and diaTopLeftY >= 0 and stop != True and points[11] < 5 and \
+                        self.gameBoard[diaTopLeftX][diaTopLeftY] == "w":
+                    points[11] += 1
+                    if self.gameBoard[diaTopLeftX][diaTopLeftY] == "b":
+                        stop = True
+                    diaTopLeftX -= 1
+                    diaTopLeftY -= 1
+
                 bestMove[i][j] = str(max(points))
 
         bestScore = 0
@@ -498,6 +650,7 @@ class Game_Tutorial:
 
         self.gameBoard[bestPos[0]][bestPos[1]] = "w"
 
+        print("bot" + str(bestScore))
         if bestScore == 4:
             returnList = []
             returnList.append("Bot")
@@ -506,5 +659,14 @@ class Game_Tutorial:
             print('\n'.join(map(''.join, self.gameBoard)))
         else:
             return False, False, (0, 0), 'None'
+
+        filled = 0
+        for i in range(len(self.gameBoard)):
+            for j in range(len(self.gameBoard[i])):
+                if self.gameBoard[i][j] != '.':
+                    filled += 1
+
+        if filled == 361:
+            return False, False, (0, 0), 'Draw'
 
         print('\n'.join(map(''.join, self.gameBoard)))
