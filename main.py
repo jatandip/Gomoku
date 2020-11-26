@@ -235,10 +235,13 @@ def displayWarning(warningPos, isTip):
     font = pygame.font.Font('FFF_Tusj.ttf', 48)
     screen = pygame.display.get_surface()
 
+    x = str(warningPos[1] + 1)
+    y = str(warningPos[0] + 1)
+
     if isTip:
-        warnString = "You are about to win at " + str(warningPos) + "!"
+        warnString = "You are about to win at (" + x + "," + y + ")!"
     else:
-        warnString = "White is about to win at " + str(warningPos) + "!"
+        warnString = "White is about to win at (" + x + "," + y + ")!"
     warnText = font.render(warnString, True, INCHWORM)
     warnRect = warnText.get_rect()
     warnRect.center = (370, 90)
