@@ -249,6 +249,7 @@ def playTutorial():
     game = Game_Tutorial()
     gameBoard = game.board()
     showBoard(gameBoard)
+    showRules()
     currentX = 0
     currentY = 0
     firstClick = True
@@ -311,10 +312,60 @@ def playTutorial():
         firstClick = False
 
 def showRules():
-    font = pygame.font.Font('FFF_Tusj.ttf', 30)
-    pygame.draw.rect(screen, COYOTE_BROWN, (583, 90, 175, 60))
-    pygame.draw.rect(screen, CAMEL, (583 + 3, 90 + 3, 175 - 6, 60 - 6))
+    screen = pygame.display.get_surface()
+    pygame.draw.rect(screen, COYOTE_BROWN, (100, 300, 598, 300))
+    pygame.draw.rect(screen, CAMEL, (100+3, 300+3, 598-6, 300-6))
 
+    pygame.draw.rect(screen, COYOTE_BROWN, (130, 520, 175, 60))
+    pygame.draw.rect(screen, CAMEL, (130+3, 520+3, 175-6, 60-6))
+
+    font = pygame.font.Font('FFF_Tusj.ttf', 40)
+    ruleText = font.render("Rules:", True, INCHWORM)
+
+    font = pygame.font.Font('FFF_Tusj.ttf', 30)
+    ruleText1 = font.render("Black plays first (you!), then white.", True, INCHWORM)
+    ruleText2 = font.render("Place your stones on an empty space", True, INCHWORM)
+    ruleText3 = font.render("When a player has 5 stones in a row,", True, INCHWORM)
+    ruleText4 = font.render("They win!", True, INCHWORM)
+    ruleText5 = font.render("Play!", True, ORANGE_YELLOW)
+
+
+    ruleRect = ruleText.get_rect()
+    ruleRect1 = ruleText1.get_rect()
+    ruleRect2 = ruleText2.get_rect()
+    ruleRect3 = ruleText3.get_rect()
+    ruleRect4 = ruleText4.get_rect()
+    ruleRect5 = ruleText5.get_rect()
+
+
+    ruleRect.center = (210, 330)
+    ruleRect1.center = (400, 370)
+    ruleRect2.center = (400, 410)
+    ruleRect3.center = (400, 450)
+    ruleRect4.center = (400, 490)
+    ruleRect5.center = (217, 550)
+
+
+    screen.blit(ruleText, ruleRect)
+    screen.blit(ruleText1, ruleRect1)
+    screen.blit(ruleText2, ruleRect2)
+    screen.blit(ruleText3, ruleRect3)
+    screen.blit(ruleText4, ruleRect4)
+    screen.blit(ruleText5, ruleRect5)
+
+    pygame.display.update()
+
+    notClicked = True
+    while notClicked:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                posx = event.pos[0]
+                posy = event.pos[1]
+                if (130 + 175) >= posx > 130 and (60 + 520) >= posy > 520:
+                    notClicked = False
+
+            if event.type == pygame.QUIT:
+                sys.exit()
 
 def showBoard(board):
     width = 800
@@ -341,6 +392,4 @@ def showBoard(board):
 
     pygame.display.update()
 
-
-    screen = pygame.display.get_surface()
 main()
