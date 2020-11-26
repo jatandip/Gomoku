@@ -262,16 +262,16 @@ def playTutorial():
             if 50 < mPosX <= 750 and 172 < mPosY <= 871 and \
                     ((((mPosX-50)//37)*37+67) != currentX or (((mPosY-172)//37)*37+189) != currentY):
                 showBoard(gameBoard)
-                pygame.draw.circle(pygame.display.get_surface(), (50, 50, 50),
-                                   (((mPosX-50)//37)*37+66, ((mPosY-172)//37)*37+189), 17)
-                currentX = ((mPosX-50)//37)*37+67
-                currentY = ((mPosY-172)//37)*37+189
                 if result[1]:
                     displayWarning(result[2], True)
                 elif result[0]:
                     displayWarning(result[2], False)
-                else:
-                    pygame.display.update()
+                pygame.draw.circle(pygame.display.get_surface(), (50, 50, 50),
+                                   (((mPosX-50)//37)*37+66, ((mPosY-172)//37)*37+189), 17)
+                currentX = ((mPosX-50)//37)*37+67
+                currentY = ((mPosY-172)//37)*37+189
+
+                pygame.display.update()
 
             if event.type == pygame.QUIT:
                 sys.exit()
