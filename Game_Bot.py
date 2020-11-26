@@ -1,4 +1,4 @@
-
+from random import randrange
 class Game_Bot:
     WHITE = "w"
     BLACK = "b"
@@ -478,11 +478,33 @@ class Game_Bot:
         for x in range(len(bestMove)):
             for y in range(len(bestMove[x])):
                 if int(bestMove[x][y]) >= bestScore and self.gameBoard[x][y]!= "b" and self.gameBoard[x][y]!= "w":
-
                     bestScore = int(bestMove[x][y])
                     bestPos = [x,y]
 
-        self.gameBoard[bestPos[0]][bestPos[1]] = "w"
+
+
+
+        filled = 0
+        for i in range(len(self.gameBoard)):
+            for j in range(len(self.gameBoard[i])):
+                if self.gameBoard[i][j] == '.':
+                    filled += 1
+
+        if filled == 360:
+            print("filled")
+            x = randrange(19)
+            y = randrange(19)
+            while (x == (move[0] - 1) or y == (move[1] - 1)):
+                x = randrange(19)
+                y = randrange(19)
+            self.gameBoard[x][y] = "w"
+        else:
+            self.gameBoard[bestPos[0]][bestPos[1]] = "w"
+        
+        
+
+        
+        print("bestPost" + str(bestScore))
 
         print("bot" + str(bestScore))
         if bestScore == 4:
