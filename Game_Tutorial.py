@@ -146,11 +146,71 @@ class Game_Tutorial:
             return "Draw"
 
         """
+                        Player close to win check for tip display
+                        """
+        for i in range(16):
+            for j in range(16):
+                # Horizontal check
+                if self.gameBoard[i][j] == 'b':
+                    if self.gameBoard[i][j + 1] == 'b':
+                        if self.gameBoard[i][j + 2] == 'b':
+                            if self.gameBoard[i][j + 3] == 'b':
+                                # Check win condition is possible
+                                if self.gameBoard[i][j - 1] == '.':
+                                    return False, True, (i, j - 1), ''
+                                elif self.gameBoard[i][j + 4] == '.':
+                                    return False, True, [i, j + 4], ''
+
+                # Vertical check
+                if self.gameBoard[i][j] == 'b':
+                    if self.gameBoard[i + 1][j] == 'b':
+                        if self.gameBoard[i + 2][j] == 'b':
+                            if self.gameBoard[i + 3][j] == 'b':
+                                # Check win condition is possible
+                                if self.gameBoard[i - 1][j] == '.':
+                                    return False, True, [i - 1, j], ''
+                                elif self.gameBoard[i + 4][j] == '.':
+                                    return False, True, [i + 4][j], ''
+
+                # Diagonal check
+                # down and right
+                if self.gameBoard[i][j] == 'b':
+                    if self.gameBoard[i + 1][j + 1] == 'b':
+                        if self.gameBoard[i + 2][j + 2] == 'b':
+                            if self.gameBoard[i + 3][j + 3] == 'b':
+                                # Check win condition is possible
+                                if self.gameBoard[i - 1][j - 1] == '.':
+                                    return False, True, [i - 1, j - 1], ''
+                                elif self.gameBoard[i + 4][j + 4] == '.':
+                                    return False, True, [i + 4, j + 4], ''
+                # up and right
+                if i >= 3:
+                    if self.gameBoard[i][j] == 'b':
+                        if self.gameBoard[i - 1][j + 1] == 'b':
+                            if self.gameBoard[i - 2][j + 2] == 'b':
+                                if self.gameBoard[i - 3][j + 3] == 'b':
+                                    if self.gameBoard[i + 1][j - 1] == '.':
+                                        return False, True, [i + 1, j - 1], ''
+                                    elif self.gameBoard[i - 4][j + 4] == '.':
+                                        return False, True, [i - 4, j + 4], ''
+
+                # down and left check for edge cases where up and right doesnt check
+                if i >= 3 and j >= 3:
+                    if self.gameBoard[i][j] == 'b':
+                        if self.gameBoard[i + 1][j - 1] == 'b':
+                            if self.gameBoard[i + 2][j - 2] == 'b':
+                                if self.gameBoard[i + 3][j - 3] == 'b':
+                                    if self.gameBoard[i - 1][j + 1] == '.':
+                                        return False, True, [i - 1, j + 1], ''
+                                    elif self.gameBoard[i + 4][j - 4] == '.':
+                                        return False, True, [i + 4, j - 4], ''
+                                    
+        """
         Player about to lose check for warning
         """
         for i in range(16):
             for j in range(16):
-                # Horizontal win check
+                # Horizontal check
                 if self.gameBoard[i][j] == 'w':
                     if self.gameBoard[i][j + 1] == 'w':
                         if self.gameBoard[i][j + 2] == 'w':
@@ -161,7 +221,7 @@ class Game_Tutorial:
                                 elif self.gameBoard[i][j + 4] == '.':
                                     return True, False, [i, j + 4], ''
 
-                # Vertical win check
+                # Vertical check
                 if self.gameBoard[i][j] == 'w':
                     if self.gameBoard[i + 1][j] == 'w':
                         if self.gameBoard[i + 2][j] == 'w':
@@ -172,7 +232,7 @@ class Game_Tutorial:
                                 elif self.gameBoard[i + 4][j] == '.':
                                     return True, False, [i + 4][j], ''
 
-                # Diagonal win check
+                # Diagonal check
                 # down and right
                 if self.gameBoard[i][j] == 'w':
                     if self.gameBoard[i + 1][j + 1] == 'w':
@@ -205,65 +265,7 @@ class Game_Tutorial:
                                     elif self.gameBoard[i + 4][j - 4] == '.':
                                         return True, False, [i + 4, j - 4], ''
 
-                """
-                Player close to win check for tip display
-                """
-                for i in range(16):
-                    for j in range(16):
-                        # Horizontal win check
-                        if self.gameBoard[i][j] == 'b':
-                            if self.gameBoard[i][j + 1] == 'b':
-                                if self.gameBoard[i][j + 2] == 'b':
-                                    if self.gameBoard[i][j + 3] == 'b':
-                                        # Check win condition is possible
-                                        if self.gameBoard[i][j - 1] == '.':
-                                            return False, True, (i, j - 1), ''
-                                        elif self.gameBoard[i][j + 4] == '.':
-                                            return False, True, [i, j + 4], ''
 
-                        # Vertical win check
-                        if self.gameBoard[i][j] == 'b':
-                            if self.gameBoard[i + 1][j] == 'b':
-                                if self.gameBoard[i + 2][j] == 'b':
-                                    if self.gameBoard[i + 3][j] == 'b':
-                                        # Check win condition is possible
-                                        if self.gameBoard[i - 1][j] == '.':
-                                            return False, True, [i - 1, j], ''
-                                        elif self.gameBoard[i + 4][j] == '.':
-                                            return False, True, [i + 4][j], ''
-
-                        # Diagonal win check
-                        # down and right
-                        if self.gameBoard[i][j] == 'b':
-                            if self.gameBoard[i + 1][j + 1] == 'b':
-                                if self.gameBoard[i + 2][j + 2] == 'b':
-                                    if self.gameBoard[i + 3][j + 3] == 'b':
-                                        # Check win condition is possible
-                                        if self.gameBoard[i - 1][j - 1] == '.':
-                                            return False, True, [i - 1, j - 1], ''
-                                        elif self.gameBoard[i + 4][j + 4] == '.':
-                                            return False, True, [i + 4, j + 4], ''
-                        # up and right
-                        if i >= 3:
-                            if self.gameBoard[i][j] == 'b':
-                                if self.gameBoard[i - 1][j + 1] == 'b':
-                                    if self.gameBoard[i - 2][j + 2] == 'b':
-                                        if self.gameBoard[i - 3][j + 3] == 'b':
-                                            if self.gameBoard[i + 1][j - 1] == '.':
-                                                return False, True, [i + 1, j - 1], ''
-                                            elif self.gameBoard[i - 4][j + 4] == '.':
-                                                return False, True, [i - 4, j + 4], ''
-
-                        # down and left check for edge cases where up and right doesnt check
-                        if i >= 3 and j >= 3:
-                            if self.gameBoard[i][j] == 'b':
-                                if self.gameBoard[i + 1][j - 1] == 'b':
-                                    if self.gameBoard[i + 2][j - 2] == 'b':
-                                        if self.gameBoard[i + 3][j - 3] == 'b':
-                                            if self.gameBoard[i - 1][j + 1] == '.':
-                                                return False, True, [i - 1, j + 1], ''
-                                            elif self.gameBoard[i + 4][j - 4] == '.':
-                                                return False, True, [i + 4, j - 4], ''
 
         bestMove = [
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
