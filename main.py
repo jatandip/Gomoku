@@ -232,16 +232,16 @@ def playUserGame():
         firstClick = False
 
 def displayWarning(warningPos, isTip):
-    font = pygame.font.Font('FFF_Tusj.ttf', 70)
+    font = pygame.font.Font('FFF_Tusj.ttf', 48)
     screen = pygame.display.get_surface()
 
     if isTip:
-        warnString = "You are about to win at" + warningPos + "!"
+        warnString = "You are about to win at " + str(warningPos) + "!"
     else:
-        warnString = "White is about to win at" + warningPos + "!"
+        warnString = "White is about to win at " + str(warningPos) + "!"
     warnText = font.render(warnString, True, INCHWORM)
     warnRect = warnText.get_rect()
-    warnRect.center = (270, 90)
+    warnRect.center = (370, 90)
     screen.blit(warnText, warnRect)
     pygame.display.update()
 
@@ -266,15 +266,15 @@ def playTutorial():
                                    (((mPosX-50)//37)*37+66, ((mPosY-172)//37)*37+189), 17)
                 currentX = ((mPosX-50)//37)*37+67
                 currentY = ((mPosY-172)//37)*37+189
-                pygame.display.update()
+                if result[1]:
+                    displayWarning(result[2], True)
+                elif result[0]:
+                    displayWarning(result[2], False)
+                else:
+                    pygame.display.update()
 
             if event.type == pygame.QUIT:
                 sys.exit()
-
-            if result[1]:
-                displayWarning(result[2], True)
-            elif result[0]:
-                displayWarning(result[2], False)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if not firstClick:
@@ -282,8 +282,10 @@ def playTutorial():
                     tileY = (mPosY-172)//37
                     print(tileX, tileY)
                     print(event.pos[0], event.pos[1])
+
                     if gameBoard[tileY][tileX] == ".":
                         result = game.result([tileY+1, tileX+1])
+                        print("result is", result[3])
                         if result[3] != "None":
                             if result[3] == "Bot":
                                 print("b win")
@@ -298,13 +300,18 @@ def playTutorial():
                                 displayWinner("draw")
                         else:
                             gameBoard = game.board()
+                            showBoard(gameBoard)
+                            if result[1]:
+                                displayWarning(result[2], True)
+                            elif result[0]:
+                                displayWarning(result[2], False)
+
+
 
         firstClick = False
 
 def showRules():
     font = pygame.font.Font('FFF_Tusj.ttf', 30)
-    screen = pygame.display.get_surface()
-
     pygame.draw.rect(screen, COYOTE_BROWN, (583, 90, 175, 60))
     pygame.draw.rect(screen, CAMEL, (583 + 3, 90 + 3, 175 - 6, 60 - 6))
 
@@ -334,4 +341,6 @@ def showBoard(board):
 
     pygame.display.update()
 
+
+    screen = pygame.display.get_surface()
 main()
