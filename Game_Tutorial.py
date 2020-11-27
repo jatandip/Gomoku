@@ -1,3 +1,5 @@
+from random import randrange
+
 class Game_Tutorial:
     WHITE = "w"
     BLACK = "b"
@@ -525,9 +527,18 @@ class Game_Tutorial:
                     bestScore = int(bestMove[x][y])
                     bestPos = [x, y]
 
-        self.gameBoard[bestPos[0]][bestPos[1]] = "w"
-
+        if filled == 360:
+            print("filled")
+            x = randrange(19)
+            y = randrange(19)
+            while (x == (move[0] - 1) or y == (move[1] - 1)):
+                x = randrange(19)
+                y = randrange(19)
+            self.gameBoard[x][y] = "w"
+        else:
+            self.gameBoard[bestPos[0]][bestPos[1]] = "w"
         print("bot" + str(bestScore))
+
         if bestScore == 4:
             returnList = []
             returnList.append("Bot")
@@ -570,7 +581,7 @@ class Game_Tutorial:
                                 # Check win condition is possible
                                 if self.gameBoard[i - 1][j] == '.' and i >= 1:
                                     return False, True, (i - 1, j), 'None'
-                                elif self.gameBoard[i + 4][j] == '.' and i <= 14:
+                                elif i <= 14 and self.gameBoard[i + 4][j] == '.':
                                     return False, True, (i + 4, j), 'None'
 
                 # Diagonal check
