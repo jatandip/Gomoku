@@ -5,7 +5,15 @@ class Game_Bot:
     EMPTY = "."
     size = 19
 
+
     def __init__(self):
+        '''
+        Setting up the initial attributes of the Game_Bot class
+        self.gameBoard is the game board that the pieces will get placed on
+
+        '''
+
+
         self.playerColour = self.BLACK
         self.computerColour = self.WHITE
         self.gameBoard = [
@@ -29,12 +37,20 @@ class Game_Bot:
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']]
 
-        #self.result([5,5])
 
+    #Method that just returns the current board state
     def Board(self):
         return self.gameBoard
 
     def result(self, move):
+
+        '''
+        The method that handles the move that the player made and the move that the bot will make
+        main sends in the move that the player made and the board is updated 
+        Once that happens then the we check if the player has won, if the player has won we return "Player"
+        otherwise we keep going on. Then we check if the game is tied, we check this by seeing if the board is all filled
+        but their are no winners. If their is a draw we return "Draw"
+        '''
 
         x = move[0] - 1
         y = move[1] - 1
@@ -93,6 +109,13 @@ class Game_Bot:
 
         if filled == 361:
             return "Draw"
+        
+
+
+        '''
+        the bestMove list will store the points that the bot can get, and the blockPlayerBoard will store the points that the player can get. 
+        '''
+
 
 
         bestMove = [
@@ -137,6 +160,18 @@ class Game_Bot:
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']]
+
+
+
+        '''
+        This algorithm below goes through each possible possition of the board and talies up how many points the player can get at each position.
+        It gets the maximum number of points at that location by finding the max of the 12 possible paths. The 12 paths are
+        right, left, up, down, the 4 diagonal paths, and the 4 middle paths. Once it getst the max number of points it at that location it stores
+        it in the self.blockPlayerBoard. If it gets 4 points it means that the player has 4 pieces that are connected on the board and then 
+        we place a the bot's piece their to try to stop the player from winning. 
+        '''
+
+
 
         for i in range(len(self.gameBoard)):
             for j in range(len(self.gameBoard[i])):
@@ -297,6 +332,9 @@ class Game_Bot:
 
                 blockPlayerBoard[i][j] = str(max(points))
 
+        
+        
+
         bestScore = 0
         bestPos = []
         for x in range(len(blockPlayerBoard)):
@@ -306,14 +344,21 @@ class Game_Bot:
                     bestScore = int(blockPlayerBoard[x][y])
                     bestPos = [x, y]
 
-        print(bestScore)
         if bestScore == 4:
             self.gameBoard[bestPos[0]][bestPos[1]] = "w"
-            print("Blocked")
-            print('\n'.join(map(''.join, self.gameBoard)))
             return "None"
         
 
+
+
+        '''
+        Find the best possible move and if the player has 4 connected pieces block the move.
+        This algorithm below goes through each possible possition of the board and talies up how many points the bot can get at each position.
+        It gets the maximum number of points at that location by finding the max of the 12 possible paths. The 12 paths are
+        right, left, up, down, the 4 diagonal paths, and the 4 middle paths. Once it getst the max number of points it at that location it stores
+        it in the self.bestMove. It then goes through bestMove and find the the index with the most amount of points and then it places the bot 
+        piece there. 
+        '''
 
         for i in range(len(self.gameBoard)):
             for j in range(len(self.gameBoard[i])):
@@ -483,6 +528,12 @@ class Game_Bot:
 
 
 
+        '''
+        This part randomizes the bots first move.
+        Checks if currently the bot has not made a move, if so randomizes the first move that it makes
+
+        '''
+
 
         filled = 0
         for i in range(len(self.gameBoard)):
@@ -491,7 +542,6 @@ class Game_Bot:
                     filled += 1
 
         if filled == 360:
-            print("filled")
             x = randrange(19)
             y = randrange(19)
             while (x == (move[0] - 1) or y == (move[1] - 1)):
@@ -503,19 +553,27 @@ class Game_Bot:
         
         
 
-        
-        print("bestPost" + str(bestScore))
+        '''
+        If the bot has 4 pieces that are already connected, connect the 5th piece and return "Bot"
+        otherwise return "None" to indicated that no one has won yet
 
-        print("bot" + str(bestScore))
+        '''
+
         if bestScore == 4:
-            #print("Bot")
             returnList = []
             returnList.append("Bot")
             returnList.append(self.gameBoard)
             return ("Bot")
-            print('\n'.join(map(''.join, self.gameBoard)))
         else:
             return ("None")
+
+
+
+        '''
+        Checks for a draw by checking the whole board and seeing if their is any empty position left, if no empty positions
+        are left it returns "Draw"
+
+        '''
 
         filled = 0
         for i in range(len(self.gameBoard)):
@@ -527,4 +585,3 @@ class Game_Bot:
             return "Draw"
 
 
-        print('\n'.join(map(''.join, self.gameBoard)))

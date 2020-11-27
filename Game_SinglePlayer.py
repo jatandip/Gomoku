@@ -23,10 +23,19 @@ class Game_SinglePlayer:
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']]
 
 
+    #Method that just returns the current board state
     def Board(self):
         return self.gameBoard
 
 
+
+    '''
+    The play method places the a white or black piece on the board depending on whos move it is 
+    It then checks if the bot or player has won, if white wins it return "White" and if black wins
+    it returns "Black", if their is no winners it returns "None"
+
+
+    '''
     def play(self, color, move):
         x = move[0] - 1
         y = move[1] - 1
