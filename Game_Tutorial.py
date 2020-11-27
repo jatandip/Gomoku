@@ -7,6 +7,10 @@ class Game_Tutorial:
     size = 19
 
     def __init__(self):
+        '''
+        Initialize Game_Tutorial class and its attributes
+        '''
+
         self.playerColour = self.BLACK
         self.computerColour = self.WHITE
         self.gameBoard = [
@@ -30,9 +34,14 @@ class Game_Tutorial:
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']]
 
+
     def board(self):
         return self.gameBoard
 
+    '''
+    This method handles the player's move and decides what move the bot will make.
+    The return value is (warning: boolean, tip: boolean, warning/tip Location: tuple , winner: string)
+    '''
     def result(self, move):
         x = move[0] - 1
         y = move[1] - 1
@@ -146,6 +155,10 @@ class Game_Tutorial:
         if filled == 361:
             return False, False, (0, 0), 'Draw'
 
+        '''
+        the bestMove list will store the points that the bot can get, and the blockPlayerBoard will store the points that the player can get. 
+        '''
+
         bestMove = [
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
@@ -189,6 +202,13 @@ class Game_Tutorial:
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']]
 
+        '''
+        This algorithm below goes through each possible possition of the board and talies up how many points the player can get at each position.
+        It gets the maximum number of points at that location by finding the max of the 12 possible paths. The 12 paths are
+        right, left, up, down, the 4 diagonal paths, and the 4 middle paths. Once it getst the max number of points it at that location it stores
+        it in the self.blockPlayerBoard. If it gets 4 points it means that the player has 4 pieces that are connected on the board and then 
+        we place a the bot's piece their to try to stop the player from winning. 
+        '''
         for i in range(len(self.gameBoard)):
             for j in range(len(self.gameBoard[i])):
                 points = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -361,6 +381,14 @@ class Game_Tutorial:
             print("Blocked")
             print('\n'.join(map(''.join, self.gameBoard)))
 
+        '''
+        Find the best possible move and if the player has 4 connected pieces block the move.
+        This algorithm below goes through each possible possition of the board and talies up how many points the bot can get at each position.
+        It gets the maximum number of points at that location by finding the max of the 12 possible paths. The 12 paths are
+        right, left, up, down, the 4 diagonal paths, and the 4 middle paths. Once it getst the max number of points it at that location it stores
+        it in the self.bestMove. It then goes through bestMove and find the the index with the most amount of points and then it places the bot 
+        piece there. 
+        '''
         for i in range(len(self.gameBoard)):
             for j in range(len(self.gameBoard[i])):
                 points = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -527,6 +555,10 @@ class Game_Tutorial:
                     bestScore = int(bestMove[x][y])
                     bestPos = [x, y]
 
+        '''
+        This part randomizes the bots first move.
+        Checks if currently the bot has not made a move, if so randomizes the first move that it makes
+        '''
         if filled == 360:
             print("filled")
             x = randrange(19)
